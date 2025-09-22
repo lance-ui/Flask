@@ -7,15 +7,15 @@ import re
 
 app = Flask(__name__)
 limiter = Limiter(
-    app,
+    app=app,
     key_func=get_remote_address,
     default_limits=["100 per minute"]
 )
 
 class Database:
     def __init__(self, db_name):
-        self.conn = sqlite3.connect(db_name)
-        self.cursor()
+        self.conn = sqlite3.connect(db_name, check_same_thread=False)
+        self.cursor = self.conn.cursor()
         self.create_table()
 
     def create_table(self):
@@ -76,7 +76,7 @@ def register_user():
         if existing_user:
             return jsonify({'message': 'Email already exists'}), 400
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         user_id = db.insert_user(email, hashed_password, fullName)
 
         return jsonify({'message': 'User registered successfully', 'user_id': user_id}), 200
