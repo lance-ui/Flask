@@ -1,5 +1,3 @@
----
-
 ```markdown
 # Flask User Registration API
 
@@ -99,5 +97,3 @@ Use the curl example above or tools like Postman to test registration.
 
 MIT
 ```
-
----
