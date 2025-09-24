@@ -1,4 +1,3 @@
-```markdown
 # Flask User Registration API
 
 A simple Flask web application for user registration, using SQLite for storage and bcrypt for secure password hashing.  
